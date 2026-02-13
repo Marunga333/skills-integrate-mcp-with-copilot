@@ -6,6 +6,7 @@ A super simple FastAPI application that allows students to view and sign up for 
 
 - View all available extracurricular activities
 - Sign up for activities
+- Persist activities and registrations in SQLite
 
 ## Getting Started
 
@@ -31,6 +32,19 @@ A super simple FastAPI application that allows students to view and sign up for 
 | ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
 | GET    | `/activities`                                                     | Get all activities with their details and current participant count |
 | POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Sign up for an activity                                             |
+| DELETE | `/activities/{activity_name}/unregister?email=student@mergington.edu` | Unregister from an activity                                         |
+
+## Database Initialization
+
+- The API now stores data in `src/activities.db` using SQLite.
+- On first run, the database is created and seeded with the default activity data.
+- On subsequent runs, existing data is reused (no reset on restart).
+
+To reset to default seeded data, delete the database file and restart the app:
+
+```
+rm src/activities.db
+```
 
 ## Data Model
 
@@ -47,4 +61,4 @@ The application uses a simple data model with meaningful identifiers:
    - Name
    - Grade level
 
-All data is stored in memory, which means data will be reset when the server restarts.
+All activity and registration data is persisted in SQLite.
